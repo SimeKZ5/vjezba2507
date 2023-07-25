@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Vozilo from "./components/Vozilo";
+import DodajVozilo from "./components/DodajVozilo";
 
 function App() {
+  const [vozila, setVozila] = useState([
+    { id: 1, marka: "Audi", tip: "Hatchback", godiste: "2023" },
+    { id: 2, marka: "BMW", tip: "Hatchback", godiste: "2023" },
+    { id: 3, marka: "Mercedes", tip: "Hatchback", godiste: "2023" },
+    { id: 4, marka: "Volkswagen", tip: "Hatchback", godiste: "2023" },
+  ]);
+
+  const dodajVozilo = (novaVozila) => {
+    const novoVozilo = { ...novaVozila, id: Date.now() };
+    setVozila([...vozila, novoVozilo]);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Lista vozila</h1>
+      {vozila.map((vozilo) => (
+        <Vozilo
+          key={vozilo.id}
+          marka={vozilo.marka}
+          tip={vozilo.tip}
+          godiste={vozilo.godiste}
+        />
+      ))}
+      <DodajVozilo onDodajVozilo={dodajVozilo} />
     </div>
   );
 }
